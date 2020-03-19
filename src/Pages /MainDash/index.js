@@ -4,6 +4,7 @@ import * as api from '../../API'
 import {ResponsiveLine,Line} from '@nivo/line'
 import {MyResponsiveLine} from './LineChart'
 import {CenteredBox} from '../styles'
+import Selector from './CountrySelector'
 
 class MainDash extends React.Component{
     state={
@@ -29,30 +30,35 @@ class MainDash extends React.Component{
    
     render(){
        //let {data} =this.state.master_data
-        return(
-                <CenteredBox>
-                    {this.state.data &&
-                    <MyResponsiveLine
-                    data={this.state.data}
-                    dates={this.state.dates}
-                    />
-                     }
-                </CenteredBox>
+        return( <div>
+                  {this.state.countries && <Selector countries={this.state.countries}/> }
+                    <CenteredBox>
+                        {this.state.data &&
+                        <React.Fragment>
+                        <MyResponsiveLine
+                        data={this.state.data}
+                        dates={this.state.dates}
+                        />
+                        </React.Fragment>
+                        }
+                    </CenteredBox>
+                </div>
         )
     }
     componentDidMount(){
         api.getCountryData()
         .then((countryData)=>{
-            let Countries=['Italy','US']
+            console.log(countryData)
+            let Countries=['Italy','US','Mongolia', 'Guatemala']
             let data=[]
             Countries.forEach((country)=>
                 data.push(this.getCountryData(countryData,country))
             )
             console.log(data)
-            this.setState({data, countryData, dates: countryData['Day']},_=>console.log(this.state.data))
+            let countries= Object.keys(countryData)
+            console.log(countries)
+            this.setState({data, countries, countryData, dates: countryData['Day']},_=>console.log(this.state.data))
         })
-        ///this.getCountryData(countryData))
-        //.catch(()=>alert('haha'))
     }
 
 }
