@@ -4,7 +4,30 @@ import * as api from '../../API'
 import {ResponsiveLine,Line} from '@nivo/line'
 import {MyResponsiveLine} from './LineChart'
 import {CenteredBox} from '../styles'
+import {icon} from 'antd'
 import Selector from './CountrySelector'
+import RonaPic from '../../Assets/Rona.svg'
+import RonaPng from '../../Assets/RONA.png'
+const SVG = ({
+    style = {},
+    fill = 'black',
+    width = '100%',
+    className = '',
+    height = '100%',
+    viewBox = '0 0 32 32',
+  }) => 
+    <svg
+      width={width}
+      style={style}
+      height={height}
+      viewBox={viewBox}
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+        <path d={RonaPic} fill={fill} />
+    </svg>;
+
 
 class MainDash extends React.Component{
     state={
@@ -33,6 +56,7 @@ class MainDash extends React.Component{
     render(){
        //let {data} =this.state.master_data
         return( <React.Fragment>
+                <img width='10%' src={RonaPng} Style={{opacity:0.3, width: '10%', position:'absolute', float: 'left'}} />
                   {this.state.countries && <Selector countries={this.state.countries} 
                                                     changeState={this.changeState}
                                                     getCountryData={this.getCountryData}
@@ -44,6 +68,7 @@ class MainDash extends React.Component{
                         data={this.state.data}
                         dates={this.state.dates}
                         />
+                       
                         </React.Fragment>
                         }
                     </CenteredBox>
