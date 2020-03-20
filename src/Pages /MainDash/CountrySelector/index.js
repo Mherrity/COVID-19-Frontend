@@ -28,11 +28,11 @@ handleChange = (values) => {
 render(){
     return (
         <React.Fragment>
-        <div>
+       
         {this.state.Children &&
         <Select
         mode="multiple"
-        style={{ width: '100%', alignSelf: 'center' }}
+        style={{ width: '80vw', alignSelf: 'center' }}
         placeholder = "Please select the country"
         onChange={this.handleChange}
         defaultValue={['US', 'Italy']}
@@ -40,7 +40,7 @@ render(){
       >
         {this.state.Children}
         </Select> }
-        </div>
+        
         </React.Fragment>
     )
 }

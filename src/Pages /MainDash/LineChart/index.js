@@ -1,30 +1,33 @@
 import { ResponsiveLine } from '@nivo/line'
 import React from 'react'
 
+
 const getGridXValues=(dates)=>{
    let len=dates.length
-   let data=[]
+   let newDates=[]
    let step=parseInt(len/10)
    let  i=0
     while(i<=len){
-        data.push(dates[i])
+        newDates.push(dates[i])
         i=i+step
     }
-    return data
+    return newDates
 }
 
 
-export const MyResponsiveLine = ({data,dates}) => (
+export const MyResponsiveLine = ({data,dates}) =>{ 
+    console.log(data)
+    return (
     <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
+        xScale={{ type: 'point' , min: 0, max: '', stacked: false, reverse: false}}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
-        colors= {{scheme:'nivo'}}
+        colors= {{scheme:'category10'}}
         //gridXValues={getGridXValues(dates)}
         useMesh={true}
         axisBottom={{
-            tickValues: getGridXValues(dates),
+            tickValues: data.length!=0 ? getGridXValues(dates) : [],
             orient: 'bottom',
             tickSize: 5,
             tickPadding: 5,
@@ -38,7 +41,7 @@ export const MyResponsiveLine = ({data,dates}) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count confirmed cases',
+            legend: 'Number of Confirmed Cases',
             legendOffset: -50,
             legendPosition: 'middle'
         }}
@@ -69,4 +72,4 @@ export const MyResponsiveLine = ({data,dates}) => (
             }
         ]}
         />
-)
+) }

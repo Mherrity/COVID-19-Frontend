@@ -32,7 +32,7 @@ class MainDash extends React.Component{
    
     render(){
        //let {data} =this.state.master_data
-        return( <div>
+        return( <React.Fragment>
                   {this.state.countries && <Selector countries={this.state.countries} 
                                                     changeState={this.changeState}
                                                     getCountryData={this.getCountryData}
@@ -47,7 +47,7 @@ class MainDash extends React.Component{
                         </React.Fragment>
                         }
                     </CenteredBox>
-                </div>
+                </React.Fragment>
         )
     }
     componentDidMount(){
