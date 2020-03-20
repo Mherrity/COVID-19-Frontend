@@ -11,6 +11,9 @@ class MainDash extends React.Component{
         master_data: null
     }
 
+    changeState=(stateName,value)=>
+        this.setState({[stateName]: value})
+
     getCountryData=(countryData,country)=>{
         let master_data={}
         let COUNTRY=countryData[country]
@@ -27,11 +30,13 @@ class MainDash extends React.Component{
        // this.setState({master_data},_=>console.log(this.state.master_data))
     }
    
-   
     render(){
        //let {data} =this.state.master_data
         return( <div>
-                  {this.state.countries && <Selector countries={this.state.countries}/> }
+                  {this.state.countries && <Selector countries={this.state.countries} 
+                                                    changeState={this.changeState}
+                                                    getCountryData={this.getCountryData}
+                                                    countryData={this.state.countryData} /> }
                     <CenteredBox>
                         {this.state.data &&
                         <React.Fragment>
@@ -49,9 +54,9 @@ class MainDash extends React.Component{
         api.getCountryData()
         .then((countryData)=>{
             console.log(countryData)
-            let Countries=['Italy','US','Mongolia', 'Guatemala']
+            let selectedCountries=['Italy','US']
             let data=[]
-            Countries.forEach((country)=>
+            selectedCountries.forEach((country)=>
                 data.push(this.getCountryData(countryData,country))
             )
             console.log(data)

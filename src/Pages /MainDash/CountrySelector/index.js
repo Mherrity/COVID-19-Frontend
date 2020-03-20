@@ -1,38 +1,47 @@
 import { Select } from 'antd';
 import React from 'react'
 
+const Children= [];
 const { Option } = Select;
-const Children= []
+
 export default class CountrySelector extends React.Component{
     state={
         Children: null
     }
-handleChange = (value) => 
-    console.log(value)
+componentDidMount(){
+
+let len = this.props.countries.length;
+let country = this.props.countries;
+
+for (let i = 0; i < len; i++) {
+Children.push(<Option key={i} value={country[i]}>{country[i]}</Option>);
+      }
+this.setState({Children})
+    }
+
+handleChange = (values) => {
+    console.log(values)
+    let data= values.map((country)=>this.props.getCountryData(this.props.countryData,country))
+    this.props.changeState('data', data)
+}
 
 render(){
     return (
         <React.Fragment>
+        <div>
         {this.state.Children &&
         <Select
         mode="multiple"
-        style={{ width: '100%' }}
-        placeholder="Please select"
-        defaultValue={['US', 'Italy']}
+        style={{ width: '100%', alignSelf: 'center' }}
+        placeholder = "Please select the country"
         onChange={this.handleChange}
+        defaultValue={['US', 'Italy']}
+        allowClear={true}
       >
         {this.state.Children}
-      </Select>
-        }
+        </Select> }
+        </div>
         </React.Fragment>
     )
 }
-componentDidMount(){
-    const Children= this.props.countries.map((country,index)=>
-       <Option key={index}>{country}</Option>
-    )
-    this.setState({Children})
 }
-
-}
-
