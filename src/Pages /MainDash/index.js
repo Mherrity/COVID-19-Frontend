@@ -2,40 +2,20 @@ import React from 'react'
 import {withRouter} from 'react-router-dom'
 import * as api from '../../API'
 import {ResponsiveLine,Line} from '@nivo/line'
-import {MyResponsiveChoropleth} from './CholoroPleth'
 import {MyResponsiveLine} from './LineChart'
-import {CenteredBox,CenteredFlex} from '../styles'
+import {CenteredBox,TopSelector} from '../styles'
 import {icon} from 'antd'
 import Selector from './CountrySelector'
 import RonaPic from '../../Assets/Rona.svg'
 import RonaPng from '../../Assets/RONA.png'
-const SVG = ({
-    style = {},
-    fill = 'black',
-    width = '100%',
-    className = '',
-    height = '100%',
-    viewBox = '0 0 32 32',
-  }) => 
-    <svg
-      width={width}
-      style={style}
-      height={height}
-      viewBox={viewBox}
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
-        <path d={RonaPic} fill={fill} />
-    </svg>;
+import Menu from '../Menu'
 
 
 class MainDash extends React.Component{
     state={
         master_data: null,
-        selectedDash: 'StateMap'
     }
-
+/*<img width='10%' src={RonaPng} Style={{opacity:0.3, width: '10%', position:'absolute', float: 'left'}} />*/
     changeState=(stateName,value)=>
         this.setState({[stateName]: value})
 
@@ -57,30 +37,27 @@ class MainDash extends React.Component{
    
     render(){
         return( <React.Fragment>
-                <img width='10%' src={RonaPng} Style={{opacity:0.3, width: '10%', position:'absolute', float: 'left'}} />
-                  {this.state.selectedDash=='CountriesDash'&& <Selector countries={this.state.countries} 
-                                                                        changeState={this.changeState}
-                                                                        getCountryData={this.getCountryData}
-                                                                        countryData={this.state.countryData} /> }
-                    <CenteredFlex>
-                    {this.state.subChart&&
-                        (this.state.subChart)
-                        }
-                    </CenteredFlex>
+                <div>
+                  {this.state.countries && 
+                
+                <TopSelector>
+                    <Selector countries={this.state.countries} 
+                      changeState={this.changeState}
+                       getCountryData={this.getCountryData}
+                         countryData={this.state.countryData} /> 
+                   </TopSelector> }
+                   <Menu style={{float: 'left',
+                                 position: 'absolute'
+                                }}
+                     history={this.props.history}
+                                />
+                  </div>
+          
                     <CenteredBox>
-                        {this.state.selectedDash=='CountriesDash' &&
-                        <React.Fragment>
+                        {this.state.data &&
                         <MyResponsiveLine
                         data={this.state.data}
                         dates={this.state.dates}
-                        />
-                        </React.Fragment>
-                        }
-                        {this.state.selectedDash=='StateMap' && this.state.mapData &&
-                        <MyResponsiveChoropleth
-                        changeState={this.changeState}
-                        max = {this.state.stateMax}
-                        data = {this.state.mapData}
                         />
                         }
                     </CenteredBox>
@@ -99,24 +76,6 @@ class MainDash extends React.Component{
             )
             let countries= Object.keys(countryData)
             this.setState({data, countries, countryData, dates: countryData['Day']},_=>console.log(this.state.data))
-        })
-        api.getStateData()
-        .then(resp=>{
-            let stateMax=0
-            
-            const mapData = resp.map((data,index)=>{
-                const{positive,negative,hospitalized,death} = data 
-                stateMax= positive<stateMax ? stateMax : positive
-                return { id:data.state,
-                        value: positive,
-                        positive,
-                        negative,
-                        hospitalized,
-                        death
-                    }
-            })
-            
-            this.setState({mapData,stateMax})
         })
     }
 

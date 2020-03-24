@@ -36,6 +36,7 @@ const ToolTip=({value,positive,negative,hospitalized,death})=>(
     </span>
     </div>
 )
+
 const CoolerToolTip = ({value,positive,negative,hospitalized,death}) => {
      console.log(value)
     const data =  [
@@ -168,6 +169,8 @@ const CoolerToolTip = ({value,positive,negative,hospitalized,death}) => {
 ) 
 }
 
+
+
 /*({death,positive,negative,hospitalized})=>(
     <h1>{positive}</h1>
 )*/
@@ -190,7 +193,7 @@ export const MyResponsiveChoropleth = ({ changeState, data,max }) => (
         borderWidth={0.5}
         borderColor="#152538"
         tooltip={(e)=>ToolTip(e.feature.data)}
-        onClick={(e)=>changeState('subChart',CoolerToolTip(e.data)) }
+        onClick={(e)=>changeState('selectedState',e.properties.NAME) }
         legends={[
             {
                 anchor: 'bottom-left',
