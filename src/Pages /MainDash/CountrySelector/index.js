@@ -32,7 +32,7 @@ render(){
         {this.state.Children &&
         <Select
         mode="multiple"
-        style={{ width: '80vw', alignSelf: 'center' }}
+        style={{ width: '80vw'}}
         placeholder = "Please select the country"
         onChange={this.handleChange}
         defaultValue={['US', 'Italy']}

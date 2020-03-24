@@ -16,3 +16,11 @@ export const executeQueryPOST = (url) =>
         })
     .then((resp)=>resp.json())
     .catch(_=>alert('SOMETHINF WENT WRONG'))
+
+export const externalQueryPOST = (url) =>
+    fetch(url,
+    {method: 'POST',
+       'Content-Type': 'application/json',
+    })
+.then((resp)=>resp.json())
+.catch(_=>alert('SOMETHINF WENT WRONG'))
