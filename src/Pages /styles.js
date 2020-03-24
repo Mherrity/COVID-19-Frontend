@@ -8,3 +8,11 @@ export const CenteredBox=Styled.div`position: fixed;
                                     height: ${props=>props.height ? props.height : '50vh'};
                                     width: ${props=>props.width ? props.width: '75%'}
                                     `
+export const CenteredFlex=Styled.div`position: fixed;
+                                    display: flex;
+                                    top: 25vh;
+                                    left: 50%;
+                                    -webkit-transform: translate(-50%, -50%);
+                                    transform: translate(-50%, -50%);
+                                    height: ${props=>props.height ? props.height : '50vh'};
+                                    width: ${props=>props.width ? props.width: '75%'}`

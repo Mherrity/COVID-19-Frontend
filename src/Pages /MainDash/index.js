@@ -2,8 +2,9 @@ import React from 'react'
 import {withRouter} from 'react-router-dom'
 import * as api from '../../API'
 import {ResponsiveLine,Line} from '@nivo/line'
+import {MyResponsiveChoropleth} from './CholoroPleth'
 import {MyResponsiveLine} from './LineChart'
-import {CenteredBox} from '../styles'
+import {CenteredBox,CenteredFlex} from '../styles'
 import {icon} from 'antd'
 import Selector from './CountrySelector'
 import RonaPic from '../../Assets/Rona.svg'
@@ -31,7 +32,8 @@ const SVG = ({
 
 class MainDash extends React.Component{
     state={
-        master_data: null
+        master_data: null,
+        selectedDash: 'StateMap'
     }
 
     changeState=(stateName,value)=>
@@ -54,24 +56,35 @@ class MainDash extends React.Component{
     }
    
     render(){
-       //let {data} =this.state.master_data
         return( <React.Fragment>
                 <img width='10%' src={RonaPng} Style={{opacity:0.3, width: '10%', position:'absolute', float: 'left'}} />
-                  {this.state.countries && <Selector countries={this.state.countries} 
-                                                    changeState={this.changeState}
-                                                    getCountryData={this.getCountryData}
-                                                    countryData={this.state.countryData} /> }
+                  {this.state.selectedDash=='CountriesDash'&& <Selector countries={this.state.countries} 
+                                                                        changeState={this.changeState}
+                                                                        getCountryData={this.getCountryData}
+                                                                        countryData={this.state.countryData} /> }
+                    <CenteredFlex>
+                    {this.state.subChart&&
+                        (this.state.subChart)
+                        }
+                    </CenteredFlex>
                     <CenteredBox>
-                        {this.state.data &&
+                        {this.state.selectedDash=='CountriesDash' &&
                         <React.Fragment>
                         <MyResponsiveLine
                         data={this.state.data}
                         dates={this.state.dates}
                         />
-                       
                         </React.Fragment>
                         }
+                        {this.state.selectedDash=='StateMap' && this.state.mapData &&
+                        <MyResponsiveChoropleth
+                        changeState={this.changeState}
+                        max = {this.state.stateMax}
+                        data = {this.state.mapData}
+                        />
+                        }
                     </CenteredBox>
+                   
                 </React.Fragment>
         )
     }
@@ -84,10 +97,26 @@ class MainDash extends React.Component{
             selectedCountries.forEach((country)=>
                 data.push(this.getCountryData(countryData,country))
             )
-            console.log(data)
             let countries= Object.keys(countryData)
-            console.log(countries)
             this.setState({data, countries, countryData, dates: countryData['Day']},_=>console.log(this.state.data))
+        })
+        api.getStateData()
+        .then(resp=>{
+            let stateMax=0
+            
+            const mapData = resp.map((data,index)=>{
+                const{positive,negative,hospitalized,death} = data 
+                stateMax= positive<stateMax ? stateMax : positive
+                return { id:data.state,
+                        value: positive,
+                        positive,
+                        negative,
+                        hospitalized,
+                        death
+                    }
+            })
+            
+            this.setState({mapData,stateMax})
         })
     }
 
