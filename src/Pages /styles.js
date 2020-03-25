@@ -1,11 +1,12 @@
 import Styled from 'styled-components'
 
-export const CenteredBox=Styled.div`position: absolute;
+export const CenteredBox=Styled.div`position: relative;
                                     float: right;
-                                    top: 50%;
+                                    bottom: 50%;
                                     right: 5vw;
-                                    -webkit-transform: translate(-0%, -50%);
-                                    transform: translate(-0%, -50%);
+                                    padding-top: 5vh;
+                                    -webkit-transform: translate(-0%, -0%);
+                                    transform: translate(-0%, -0%);
                                     height: ${props=>props.height ? props.height : '50vh'};
                                     width: ${props=>props.width ? props.width: '75%'};
                                     `
@@ -29,7 +30,8 @@ export const CenteredFlex=Styled.div`position: relative;
                                     height: ${props=>props.height ? props.height : '50vh'};
                                     width: ${props=>props.width ? props.width: '75%'}`
 
-export const TopSelector=Styled.div`position: relative;
+export const TopSelector=Styled.div`z-index: 2;
+                                    position: relative;
                                     float: right;
                                     right: 5vw;
                                     top: ${props=>props.top ? props.top : '5vh'};
@@ -38,3 +40,16 @@ export const TopSelector=Styled.div`position: relative;
                                     align-content: flex-end;
                                     justify-content: flex-end;
                                     `
+
+export const TopSelectorFlex=Styled.div`z-index: 2;
+                                    position: relative;
+                                    float: right;
+                                    right: 5vw;
+                                    top: ${props=>props.top ? props.top : '5vh'};
+                                    width: 100%;
+                                    display: flex;
+                                    
+                                    align-content:  flex-end;
+                                    justify-content: flex-end;
+                                    `
+                                    

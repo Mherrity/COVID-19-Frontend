@@ -186,7 +186,7 @@ export const MyResponsiveChoropleth = ({ changeState, data,max }) => (
         label="properties.name"
         valueFormat=".2s"
         projectionScale={Width/3}
-        projectionTranslation={[ 1.2, 1.3 ]}
+        projectionTranslation={[ 1.2, 1.6 ]}
         projectionRotation={[ 0, 0, 0 ]}
         enableGraticule={true}
         graticuleLineColor="#dddddd"

@@ -25,6 +25,9 @@ const App= ()=> (
     <Switch>
     <Route exact path='/states' component={Pages.StatesDash} />
     </Switch>
+    <Switch>
+    <Route exact path='/race' component={Pages.Race} />
+    </Switch>
     </BrowserRouter>
 
   );

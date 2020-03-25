@@ -30,7 +30,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div style={{ width: '20vw', position: 'absolute', float: 'left' , zIndex: 1}}>
+      <div style={{ width: '20vw', position: 'absolute', float: 'left' , zIndex: 3}}>
           <img src={RONA} width='50%'
            onClick={this.toggleCollapsed}
            style={{ marginBottom: 16 }}
